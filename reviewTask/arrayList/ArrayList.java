@@ -3,7 +3,7 @@ package ru.hse.edu.sc.y2020.arrayList;
 import java.util.Arrays;
 
 public class ArrayList<T> implements MyList<T> {
-    private int DEFAULT_SIZE = 10;
+    private final int DEFAULT_SIZE = 10;
     private int currentSize = 0;
     private Object[] innerArray;
 
