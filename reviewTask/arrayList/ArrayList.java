@@ -9,7 +9,10 @@ public class ArrayList<T> implements MyList<T> {
 
     @Override
     public T get(int index) {
-        // Обрабатывать случай выхода за границы массива не надо, так как массив сам при необходимости выкинет его.
+        if (currentSize <= index) {
+            throw new IndexOutOfBoundsException(String.format("Index %d is out of range [0; %d]", index, currentSize - 1));
+        }
+
         return (T)innerArray[index];
     }
 
