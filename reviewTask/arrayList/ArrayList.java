@@ -3,6 +3,8 @@ package ru.hse.edu.sc.y2020.arrayList;
 import java.util.Arrays;
 
 public class ArrayList<T> implements MyList<T> {
+	// Было бы лучше, если DEFAULT_SIZE был равен степени
+	// двойки, т.к секции памяти тоже степени двойки.
     private final int DEFAULT_SIZE = 10;
     private int currentSize = 0;
     private Object[] innerArray;
@@ -18,7 +20,13 @@ public class ArrayList<T> implements MyList<T> {
 
     @Override
     public void put(T value) {
-        if (currentSize == innerArray.length - 1) {
+        // Ресайзить всего на 10 элементов плохо, т.к
+		// если в лист нужно будет вставить 1.000.000+
+		// элементов, то это будет работать бесконечно долго,
+		// т.к будет произведено 100.000+ copy() каждый из которых
+		// будет копировать 100.000+ элементов.
+		
+		if (currentSize == innerArray.length - 1) {
             // Невыгодно ресайзить массив на один элемент (innerArray.length + 1), так как это дорогостоящая операция, так что ресайзим на DEFAULT_SIZE, чтобы избежать
             // ресайз при каждом put. Не стал увеличивать в n размер массива при каждом переполнении, так как тогда размер в теории может оказаться слишком большим.
             resize(innerArray.length + DEFAULT_SIZE);
@@ -56,6 +64,8 @@ public class ArrayList<T> implements MyList<T> {
      * Default constructor of ArrayList with capacity 10.
      */
     public ArrayList() {
+		// Можно было бы сразу скастить массив к T[]
+		// и дальше не заморачиваться с приведением типов.
         innerArray = new Object[DEFAULT_SIZE];
     }
 
